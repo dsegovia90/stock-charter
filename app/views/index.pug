@@ -1,6 +1,12 @@
 include includes/head
 
 h1 Hello world!
-.columns
-	.column
-		canvas()
+.container
+	.columns
+		.column
+			canvas#myChart(width='800' height='400')
+
+script.
+	var stockPrice = JSON.parse('!{stockPrice}')
+	var stockDate = '#{stockDate}'
+script(src='../js/chart.js')

@@ -12,6 +12,7 @@
     "body-parser": "^1.17.1",
     "chart.js": "^2.5.0",
     "express": "^4.15.2",
+    "get-stock": "^1.0.3",
     "pug": "^2.0.0-beta11"
   }
 }
