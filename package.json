@@ -1,0 +1,16 @@
+{
+  "name": "stock-chart",
+  "version": "1.0.0",
+  "description": "stock chart freeCodeCamp basejump",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniel Segovia",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "pug": "^2.0.0-beta11"
+  }
+}
