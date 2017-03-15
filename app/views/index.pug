@@ -1,12 +1,20 @@
 include includes/head
 
-h1 Hello world!
+.container
+	canvas#myChart(width='800' height='400')
+
 .container
 	.columns
-		.column
-			canvas#myChart(width='800' height='400')
+		.column.is-4.is-offset-6
+			form
+				label.label Stock:
+				.control
+					p.control
+						input.input(type='text' placeholder='GOOGL')
+					p.control
+						input.button.is-primary(type='submit' value='Search')
 
 script.
-	var stockPrice = JSON.parse('!{stockPrice}')
+	var stockPrice = '#{stockPrice}'
 	var stockDate = '#{stockDate}'
 script(src='../js/chart.js')
