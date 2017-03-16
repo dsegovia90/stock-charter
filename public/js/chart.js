@@ -8,9 +8,14 @@ var ctx = document.getElementById('myChart')
 var stockPrices = stockPrices.split(',').map(Number)
 var stockDate = stockDate.split(',')
 var stocks = stocks.split(',')
+
+for(i=0; i<stockDate.length; i++){
+	stockDate[i] = stockDate[i].slice(0,15)
+}
 console.log(stockPrices)
-console.log(stockDate.length)
+console.log(stockDate)
 console.log(stocks)
+
 
 var dataSets = []
 
@@ -19,6 +24,8 @@ for(i = 0; i < stocks.length; i++){
 	dataSets.push({
 		label: stocks[i],
 		data: stockPriceSliced,
+		fill: false,
+	  borderColor: color[i],
 	  backgroundColor: color[i]
 	})
 }
@@ -31,10 +38,28 @@ var myChart = new Chart(ctx, {
   },
   options:
   {
+  	hover: 
+  	{
+  		mode: 'index'
+  	},
+  	tooltips: 
+  	{
+  		mode: 'index', 
+  		position: 'nearest'
+  	},
+  	elements:
+  	{
+  		point: 
+  		{
+  			radius: 0,
+  			hitRadius: 5,
+  			hoverRadius: 5
+  		}
+  	},
   	scales:
   	{
   		xAxes: [{
-  			display: false
+  			display: true
   		}]
   	}
   }
