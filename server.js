@@ -22,10 +22,6 @@ app.use(session({
 	resave: false,
 	saveUninitialized: true
 }))
-app.use(require('flash')())
-
-
-
 
 routes(app, io)
 
