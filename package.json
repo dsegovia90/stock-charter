@@ -10,10 +10,14 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.1",
+    "bulma": "^0.4.0",
     "chart.js": "^2.5.0",
     "express": "^4.15.2",
+    "express-session": "^1.15.1",
+    "flash": "^1.1.0",
     "get-stock": "^1.0.3",
     "moment": "^2.17.1",
-    "pug": "^2.0.0-beta11"
+    "pug": "^2.0.0-beta11",
+    "socket.io": "^1.7.3"
   }
 }

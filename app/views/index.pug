@@ -3,12 +3,20 @@ include includes/head
 .container
 	canvas#myChart(width='800' height='400')
 
-.container
+
+
+.container#content
 	.columns
 		.column.is-4.is-offset-2
 			if stocks
 				each stock in stocks
-					p= stock
+					-var link = '/delete/' + stock
+					.card
+						.card-header
+							p.card-header-title= stock
+							a.card-header-icon(href=link)
+								span.icon
+									i.fa.fa-times
 		.column.is-4
 			form(action='/' method='post')
 				label.label Stock:
@@ -17,9 +25,21 @@ include includes/head
 						input.input(name='stock' type='text' placeholder='GOOGL' required)
 					p.control
 						input.button.is-primary(type='submit' value='Search')
+.container
+	.columns
+		.column.is-4.is-offset-6
+			while message = flash.shift()
+				-var isWhat = 'message is-' + message.type
+				article(class=isWhat)
+					.message-header
+						p=	message.message
+						button.delete
+
 script(src='../js/random-colors.js')
 script.
 	var stockPrices = '#{stockPrices}'
 	var stockDate = '#{stockDate}'
 	var stocks = '#{stocks}'
+script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js')
 script(src='../js/chart.js')
+script(src='../js/main.js')
