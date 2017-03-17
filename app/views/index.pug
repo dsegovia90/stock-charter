@@ -25,14 +25,7 @@ include includes/head
 					p.control
 						input#submit.button.is-primary(type='submit' value='Search')
 			br
-			#flash_message
-			while message = flash.shift()
-				-var isWhat = 'message is-' + message.type
-				article(class=isWhat)
-					.message-header
-						p=	message.message
-						button.delete
-		
+			#flash_message		
 
 script(src='../js/random-colors.js')
 script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js')
