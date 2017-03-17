@@ -7,33 +7,32 @@ include includes/head
 
 .container#content
 	.columns
-		.column.is-4.is-offset-2
+		#stock_list.column.is-4.is-offset-2
 			if stocks
 				each stock in stocks
-					-var link = '/delete/' + stock
-					.card
+					.card(id=stock)
 						.card-header
 							p.card-header-title= stock
-							a.card-header-icon(href=link)
+							a.card-header-icon.delete_link
 								span.icon
 									i.fa.fa-times
 		.column.is-4
-			form(action='/' method='post')
+			form#stock_form(action='/' method='post')
 				label.label Stock:
 				.control
 					p.control
-						input.input(name='stock' type='text' placeholder='GOOGL' required)
+						input#stock_box.input(name='stock' type='text' placeholder='GOOGL' required)
 					p.control
-						input.button.is-primary(type='submit' value='Search')
-.container
-	.columns
-		.column.is-4.is-offset-6
+						input#submit.button.is-primary(type='submit' value='Search')
+			br
+			#flash_message
 			while message = flash.shift()
 				-var isWhat = 'message is-' + message.type
 				article(class=isWhat)
 					.message-header
 						p=	message.message
 						button.delete
+		
 
 script(src='../js/random-colors.js')
 script.
@@ -43,3 +42,7 @@ script.
 script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js')
 script(src='../js/chart.js')
 script(src='../js/main.js')
+
+
+
+
