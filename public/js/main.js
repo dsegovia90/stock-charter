@@ -1,8 +1,6 @@
 $(document).ready(function(){
 
-	$('#stock_form').submit(function(e){
-		e.preventDefault();
-	})
+
 
 	$('#flash_message').on('click', 'article' , function (){
 	  $(this).remove()
@@ -10,15 +8,18 @@ $(document).ready(function(){
 
 })
 
+var myChart
 
 ////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////
 
+var ctx = document.getElementById('myChart')
 
 $(function() {
 	var socket = io()
 
-	$('form').submit(function(){
+	$('form').submit(function(e){
+		e.preventDefault();
 		var stockBox = $('#stock_box').val().toUpperCase()
 		$('#stock_box').val('')
 		socket.emit('new stock', stockBox)
@@ -29,13 +30,15 @@ $(function() {
 		socket.emit('delete', stockIdToDel)
 	})
 
-
-
-
-
+	socket.on('init', function(data){
+		console.log('Init')
+		plot(data.stocks, data.stockPrices, data.stockDate)
+	})
 
 	socket.on('stock batch', function(data){
 		//rerender the chart with all the stocks
+		plot(data.stocks, data.stockPrices, data.stockDate)
+
 
 		//add all stocks to the list
 		console.log(data.stocks)
@@ -53,8 +56,9 @@ $(function() {
 			)
 	})
 
-	socket.on('delete', function(deleteId){
+	socket.on('delete', function(deleteId, data){
 		$(`#${deleteId}`).remove()
+		plot(data.stocks, data.stockPrices, data.stockDate)
 	})
 
 
@@ -69,6 +73,56 @@ $(function() {
 			)
 	})
 
+
+	function plot(stocks, stockPrices, stockDate){
+		var dataSets = []
+		for(i=0; i < stocks.length; i++){
+			dataSets.push({
+				label: stocks[i],
+				data: stockPrices[i],
+				fill: false,
+				borderColor: color[i],
+				backgroundColor: color[i]
+			})
+		}
+		if(myChart){
+			myChart.destroy()
+		}
+		myChart = new Chart(ctx, {
+		  type: 'line',
+		  data: {
+		    labels: stockDate,
+		    datasets: dataSets
+		  },
+		  options:
+		  {
+		  	hover: 
+		  	{
+		  		mode: 'index'
+		  	},
+		  	tooltips: 
+		  	{
+		  		mode: 'index', 
+		  		position: 'nearest'
+		  	},
+		  	elements:
+		  	{
+		  		point: 
+		  		{
+		  			radius: 0,
+		  			hitRadius: 5,
+		  			hoverRadius: 5
+		  		}
+		  	},
+		  	scales:
+		  	{
+		  		xAxes: [{
+		  			display: true
+		  		}]
+		  	}
+		  }
+		})
+	}
 
 })
 

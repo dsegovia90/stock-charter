@@ -9,13 +9,17 @@ module.exports = function(app, io){
 
 	app.get('/', function(req, res){
 		res.locals.stocks = stocks
-		res.locals.stockPrices = stockPrices
-		res.locals.stockDate = stockDate
 		res.render('index')	
 	})
 
 	io.on('connection', function(socket){
 		console.log('User connected.')
+
+		socket.emit('init', {
+						stocks: stocks,
+						stockPrices: stockPrices,
+						stockDate: stockDate
+					})
 
 		socket.on('new stock', function(data){
 		var addedStock = data.toUpperCase()
@@ -49,7 +53,7 @@ module.exports = function(app, io){
 					stockDate = []
 					for(i = 0; i < quotes.length; i++){
 						stockPrice.push(quotes[i].close)
-						stockDate.push(quotes[i].date)
+						stockDate.push(quotes[i].date.toString().slice(0,10))
 					}
 					stocks.push(addedStock)
 					stockPrices.push(stockPrice)
@@ -76,7 +80,11 @@ module.exports = function(app, io){
 			if(stocks.length < 1){
 				stockDate = []
 			}
-			io.emit('delete', deleteId)
+			io.emit('delete', deleteId, {
+				stocks: stocks,
+				stockPrices: stockPrices,
+				stockDate: stockDate
+			})
 			socket.emit('flash', [ 'danger' , 'Deleted Stock: ' + stockToDel ])
 		})
 
